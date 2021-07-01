@@ -1,0 +1,24 @@
+{
+  "name": "employee-content-management",
+  "version": "1.0.0",
+  "description": "employee management system ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexelliott22/employee-content-management.git"
+  },
+  "author": "Alex Elliott",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alexelliott22/employee-content-management/issues"
+  },
+  "homepage": "https://github.com/alexelliott22/employee-content-management#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.9"
+  }
+}
