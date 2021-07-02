@@ -2,7 +2,7 @@ const inquire = require('inquirer');
 
 
 
-const questions = [
+const initialQuestions = [
     {
         type: 'list',
         name: 'viewOrAdd',
@@ -14,25 +14,43 @@ const questions = [
 const startApp = function() {
 
     inquire
-    .prompt(questions)
+    .prompt(initialQuestions)
     .then(data => {
-        console.log(data);
+        
         //write a function to show them the database table they select
-        // showTables(data)
+        showTables(data)
         //write a function to handle the adding 
     })
 }
 
 const showTables = (data) => {
     if(data.viewOrAdd == 'view all departments') {
+        fetch('/api/departments', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then(data => console.table(data))
         
-        startApp();
-    } else if(data.viewOrAdd == 'view all roles') {
-        
-        startApp();
-    } else if(data.viewOrAdd == 'view all employees') {
 
-        startApp();
+    } else if(data.viewOrAdd == 'view all roles') {
+        fetch('/api/roles', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then(data => console.table(data))
+
+    } else if(data.viewOrAdd == 'view all employees') {
+        fetch('/api/employees', {
+            method: 'GET',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then(data => console.table(data))
     }
     return;
 }
