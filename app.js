@@ -115,31 +115,37 @@ const addRoleQuestions = [
     }
 ]
 
-const startApp = async function() {
+const startApp = () => {
     inquire
     .prompt(initialQuestions)
     .then(data => showTables(data))
     .then(data => initAddQuestions(data))
+    .catch(error => console.log(error))
     
 }
 
-const addNewDepartment = (data) => {
+const addNewDepartment = async (data) => {
     let newDepartment = new Departments()
 
-    newDepartment.addDepartment(data)
+    await newDepartment.addDepartment(data)
+
+    setTimeout(startApp, 1000)
 }
 
-const addNewRole = (data) => {
+const addNewRole = async (data) => {
     let newRole = new Roles();
 
-    newRole.addRole(data);
+    await newRole.addRole(data);
+
+    setTimeout(startApp, 1000)
 }
 
-const addNewEmployee = (data) => {
+const addNewEmployee = async (data) => {
     let newEmployee = new Employees();
-    let departmentID = newEmployee.getDepartmentID('Accounting')
-    console.log(departmentID);
-//    newEmployee.getDepartmentID('Staff', departmentID)
+    
+    await newEmployee.addEmployee(data)
+
+    setTimeout(startApp, 1000)
 }
 
 const initAddQuestions = (data) => {
@@ -147,34 +153,43 @@ const initAddQuestions = (data) => {
         return inquire
         .prompt(addDepartmentQuestions)
         .then(data => addNewDepartment(data))
+        .catch(error => error)
     } else if(data.viewOrAdd == 'add a role') {
         return inquire
         .prompt(addRoleQuestions)
         .then(data => addNewRole(data))
+        .catch(error => error)
     } else if(data.viewOrAdd == 'add an employee') {
         return inquire
         .prompt(addEmployeeQuestions)
         .then(data => addNewEmployee(data))
+        .catch(error => error)
     }
 }
 
-const showTables = (data) => {
-    if(data.viewOrAdd == 'view all departments') {
-        let getDepartments = new Departments();
-        
-        getDepartments.getAllDepartments();
-
-    } else if(data.viewOrAdd == 'view all roles') {
-        let viewAllRoles = new Roles();
-        
-        viewAllRoles.getAllRoles();
-    } else if(data.viewOrAdd == 'view all employees') {
-        let viewEmployees = new Employees();
-
-        viewEmployees.getAllEmployees();
-    }
+const showTables = async (data) => {
+    try {
+        if(await data.viewOrAdd == 'view all departments') {
+            let getDepartments = new Departments();
+            await getDepartments.getAllDepartments();
+            setTimeout(startApp, 1000)
     
-    return data;
+        } else if(await data.viewOrAdd == 'view all roles') {
+            let viewAllRoles = new Roles();
+            await viewAllRoles.getAllRoles();
+            setTimeout(startApp, 1000)
+    
+        } else if(await data.viewOrAdd == 'view all employees') {
+            let viewEmployees = new Employees();
+            await viewEmployees.getAllEmployees();
+            setTimeout(startApp, 1000)
+    
+        } 
+        return data;
+        
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 startApp();

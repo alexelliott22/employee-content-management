@@ -1,5 +1,6 @@
 
-const mysql = require('mysql2/promise');
+const mysql = require('mysql2');
+const bluebird = require('bluebird');
 
 //connect to the database
 const db = mysql.createConnection(
@@ -12,6 +13,3 @@ const db = mysql.createConnection(
 );
 
 module.exports = db;
-
-
-
