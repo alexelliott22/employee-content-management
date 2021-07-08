@@ -6,17 +6,13 @@
   ## Github link
   <https://github.com/alexelliott22/employee-content-management>
 
-  ## Deployed Link
-  <>
-
 
   ## Walkthrough Video
-  [Walkthrough video]()
+  [Walkthrough video](https://drive.google.com/file/d/1ucowaXr_B8asP3Dsaud-DXPo78a5kdK4/view?usp=sharing)
 
   ## Table of Contents
 
   * [Installation](#installation)
-  * [Tests](#tests)
   * [Questions](#questions)
 
   ## Installation
