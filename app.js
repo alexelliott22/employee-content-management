@@ -6,7 +6,7 @@ const {initialQuestions,
     addEmployeeQuestions,
     addDepartmentQuestions,
     addRoleQuestions,
-    listofEmployees} = require('./lib/arrayQuestions');
+    listofEmployees, getRole} = require('./lib/arrayQuestions');
 
 let newEmployee = new Employees();
 let newRole = new Roles();
@@ -33,19 +33,19 @@ const initialQuestionHandler = async (answer) => {
             await showEmployeesTbl();
             break;
         case 'add a department':
-            return inquire
+            inquire
             .prompt(addDepartmentQuestions)
             .then(data => addNewDepartment(data))
             .catch(error => error);
             break;
         case 'add a role':
-            return inquire
+            inquire
             .prompt(addRoleQuestions)
             .then(data => addNewRole(data))
             .catch(error => error);
             break;
         case 'add an employee':
-            return inquire
+            inquire
             .prompt(addEmployeeQuestions)
             .then(data => addNewEmployee(data))
             .catch(error => error)
@@ -106,8 +106,20 @@ const addNewRole = async (data) => {
 }
 
 const addNewEmployee = async (data) => {
-    try {
-        await newEmployee.addEmployee(data);
+    try {        
+        
+        const rolesChoices = await newRole.getRoleNames(data.department)
+        
+        const {role} = await inquire.prompt([
+            {   
+                type: 'list',
+                name: 'role',
+                message: 'What role does your new employee have?',
+                choices: rolesChoices
+            }
+        ])
+        
+        await newEmployee.addEmployee(data, role);
         setTimeout(startApp, 1000)
     } catch (error) {
         console.log('Failed to add a new employee:(')
@@ -119,7 +131,6 @@ const updateEmployeeRole = async () => {
         const name = await inquire.prompt(listofEmployees)
 
         let splitName = name.employee.split(' ')
-        
         
         const rolesChoices = await newRole.getRoleNames(name.department)
         
